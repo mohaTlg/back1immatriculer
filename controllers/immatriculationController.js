@@ -1,17 +1,41 @@
 const ImmatriculationModel = require("../models/immatriculationModel");
 
 module.exports.createImmatriculation = async (req, res) => {
+  //console.log(db.immatriculations.stats());
+  let numcg = 0;
+  let numIm = 0;
+  let seriecg = "A";
+
+  const allImm = await ImmatriculationModel.find().select(); // a revoir en fonction du mode d'exploitation
+  numcg = allImm.length + 1;
+
+  numIm = allImm.length + 1;
+  //numIm = 100099;
+
+  if (numIm > 19998) {
+    numIm = numIm - 19998;
+    seriecg = "C";
+  } else if (numIm > 9999) {
+    numIm = numIm - 9999;
+    seriecg = "B";
+  }
+
   const immatricul = {
-    numero_immatriculation: 0001,
-    numero_carte_grise: 0004024,
-    date_emmission: req.body.date_emission,
-    date_fin: req.body.date_fin,
-
-    demandeId: req.demande._id.toString(),
-    service: req.demande.service.toString(), // a ajouter dans la table demande
-    type: req.demande.type_voiture_label.toString(),
-    marque: req.demande.marque_label.toString(),
-
-    departement: req.user.departement.toString(),
+    numero_immatriculation: numIm,
+    numero_carte_grise: numcg,
+    serie_carte_grise: seriecg,
+    categorie: "VA",
+    //$inc: { numero_carte_grise: 1 },
   };
+
+  try {
+    const immatriculation = await ImmatriculationModel.create(immatricul);
+    return res.status(201).json({
+      status: "success",
+      message: "immatriculation faite avec succes",
+      immatriculation,
+    });
+  } catch (err) {
+    return res.status(400).send({ status: "error", message: err });
+  }
 };

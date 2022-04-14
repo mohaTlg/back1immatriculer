@@ -6,6 +6,7 @@ require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const demandeRoutes = require("./routes/demandeRoutes");
 const VehiculeApiRoutes = require("./routes/VehiculeApiRoutes");
+const immatriculationRoutes = require("./routes/immatriculationRoutes");
 
 //cors and body parser
 const cors = require("cors");
@@ -40,6 +41,8 @@ app.use(cookieParser());
 app.use("/api/user", userRoutes);
 app.use("/api/demande", demandeRoutes);
 app.use("/api/vehicles", VehiculeApiRoutes);
+app.use("/api/immat", immatriculationRoutes);
+
 // server
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}`);
