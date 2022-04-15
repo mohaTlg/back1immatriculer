@@ -12,13 +12,15 @@ const createToken = (id) => {
 };
 //
 module.exports.signUp = async (req, res) => {
-  const { firstName, lastName, email, phoneNumber, password } = req.body;
+  const { firstName, lastName, email, phoneNumber, password, departement } =
+    req.body;
   const user = {
     firstName: firstName,
     lastName: lastName,
     email: email,
     phoneNumber: phoneNumber,
     password: password,
+    departement: departement,
   };
   try {
     const data = await UserModel.create(user);

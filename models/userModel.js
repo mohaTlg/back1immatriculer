@@ -47,6 +47,9 @@ const userSchema = new mongoose.Schema(
     phoneNumber: {
       type: String,
     },
+    departement: {
+      type: String,
+    },
     emailValidate: {
       type: Boolean,
       default: "false",
