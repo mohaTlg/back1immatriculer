@@ -23,6 +23,9 @@ const ImmatriculationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    date_expiration: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

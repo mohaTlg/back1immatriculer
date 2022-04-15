@@ -1,6 +1,13 @@
 const ImmatriculationModel = require("../models/immatriculationModel");
 
 module.exports.createImmatriculationVA = async (req, res) => {
+  var p = new Date();
+  var thisMonth = p.getUTCMonth();
+  var plusMois = 6;
+  var DansSixMois = new Date();
+  DansSixMois.setUTCMonth(thisMonth + plusMois);
+  console.log(DansSixMois);
+
   //console.log(db.immatriculations.stats());
   let numIm = 0;
   let seriecg = "A";
@@ -28,6 +35,7 @@ module.exports.createImmatriculationVA = async (req, res) => {
     numero_carte_grise: numcg,
     serie_carte_grise: seriecg,
     categorie: "VA",
+    date_expiration: DansSixMois,
     //$inc: { numero_carte_grise: 1 },
   };
 
@@ -71,6 +79,7 @@ module.exports.createImmatriculationEP = async (req, res) => {
     numero_carte_grise: numcg,
     serie_carte_grise: seriecg,
     categorie: "EP",
+    //date_expiration: new Date() + 1,
     //$inc: { numero_carte_grise: 1 },
   };
 
