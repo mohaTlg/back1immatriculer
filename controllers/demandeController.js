@@ -135,6 +135,26 @@ module.exports.getMyRejectedDemande = async (req, res) => {
     .status(200)
     .send({ status: "success", nb: demandes.length, demandes });
 };
+
+module.exports.getMyDemandeAImprimer = async (req, res) => {
+  const demandes = await DemandeModel.find({
+    by: req.user._id.toString(),
+    etat: "aImprimer",
+  }).select();
+  return res
+    .status(200)
+    .send({ status: "success", nb: demandes.length, demandes });
+};
+
+module.exports.getDemandeAImprimer = async (req, res) => {
+  const demandes = await DemandeModel.find({
+    etat: "aImprimer",
+  }).select();
+  return res
+    .status(200)
+    .send({ status: "success", nb: demandes.length, demandes });
+};
+
 //  recuperer les  demandes en pending  d'un demandeur
 module.exports.getMyDemande = async (req, res) => {
   const demandes = await DemandeModel.find({
@@ -319,6 +339,35 @@ module.exports.validateDemande = async (req, res) => {
       {
         $set: {
           etat: "valider",
+        },
+      },
+      { new: true, upsert: true, setDefaultsOnInsert: true },
+      (err, docs) => {
+        if (!err) {
+          return res.status(200).send({ status: "success", docs });
+        } else {
+          return res.status(500).send({ status: "errror", message: err });
+        }
+      }
+    );
+  } catch (err) {
+    return res.status(500).json({ status: "error", message: err });
+  }
+};
+
+module.exports.aimprimerDemande = async (req, res) => {
+  if (!ObjectID.isValid(req.params.id)) {
+    return res
+      .status(400)
+      .send({ status: "error", error: "ID inconu : " + req.params.id });
+  }
+
+  try {
+    DemandeModel.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          etat: "aImprimer",
         },
       },
       { new: true, upsert: true, setDefaultsOnInsert: true },

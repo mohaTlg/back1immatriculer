@@ -33,6 +33,8 @@ router.get("/me/pending", requireAuth, demandeController.getMyPendingDemande);
 router.get("/me/progress", requireAuth, demandeController.getMyProgressDemande);
 router.get("/me/ended", requireAuth, demandeController.getMyEndedDemande);
 router.get("/me/rejected", requireAuth, demandeController.getMyRejectedDemande);
+//router.get("/me/aImprimer", requireAuth, demandeController.getMyDemandeAImprimer);
+router.get("/aImprimer", requireAuth, demandeController.getDemandeAImprimer);
 router.get(
   "/me/generated",
   requireAuth,
@@ -70,6 +72,11 @@ router.get(
 
 //Les route du superviseur
 router.get("/", [requireAuth, isSupervisor], demandeController.getAllDemandes);
+router.get(
+  "/sup/ended",
+  [requireAuth, isSupervisor],
+  demandeController.getAllfinishedDemandes
+);
 // router.get(
 //   "/superviseur/progress",
 //   [requireAuth, isSupervisor],
@@ -97,6 +104,12 @@ router.patch(
   [requireAuth, isSupervisor],
   demandeController.validateDemande
 );
+router.patch(
+  "/aImprimer/:id",
+  [requireAuth, isSupervisor],
+  demandeController.aimprimerDemande
+);
+
 router.patch(
   "/rejected/:id",
   [requireAuth, isSuperAdmin],
