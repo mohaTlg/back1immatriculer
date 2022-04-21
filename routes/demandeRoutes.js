@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const demandeController = require("../controllers/demandeController");
+const uploadController = require("../controllers/upload.controller");
 const { uploadImage } = require("../utils/uploadImage");
 const {
   requireAuth,
@@ -49,6 +50,10 @@ router.post(
   uploadTattoo.array("files"),
   demandeController.createDemande
 );
+
+// upload
+//router.post('/upload', , uploadController.uploadImageVehicule)
+
 router.get("/:id", [requireAuth], demandeController.demandeInfo);
 router.get("/search/:search", [requireAuth], demandeController.search);
 

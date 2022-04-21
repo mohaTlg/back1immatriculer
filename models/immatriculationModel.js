@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const ImmatriculationSchema = new mongoose.Schema(
   {
-    /*demandeId: {
+    demandeId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Demande",
-      require: true,
-    },*/
+      //type: String,
+      //   require: true,
+    },
     numero_immatriculation: {
       type: Number,
       required: true,
@@ -25,6 +25,9 @@ const ImmatriculationSchema = new mongoose.Schema(
     },
     date_expiration: {
       type: Date,
+    },
+    imm_valid: {
+      type: Boolean,
     },
   },
   {
